@@ -1,0 +1,478 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap");
+
+$backgroundColor1: #b8ff2e;
+$backgroundColor2: #2ea8ff;
+$textColor: #426696;
+$font-family: "Ubuntu Condensed", sans-serif;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $font-family;
+}
+
+@import "util";
+
+body {
+    background: linear-gradient(0, $backgroundColor1, $backgroundColor2);
+    background-repeat: no-repeat;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+    @include flex(center, center);
+}
+
+#modal {
+    & > *:not(.overlay) {
+        z-index: 1030;
+    }
+
+    & > .overlay {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1020;
+        position: fixed;
+        background-color: rgba($color: #000000, $alpha: 0.6);
+    }
+
+    & > .modal {
+        top: 50%;
+        left: 50%;
+        width: 40%;
+        height: 40%;
+        min-width: 320px;
+        min-height: 320px;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        backdrop-filter: blur(20px);
+        border-radius: 10px;
+
+        @include flex(center, center);
+
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+
+        .inner {
+            width: 80%;
+            height: 80%;
+            @include flex(center, center, true);
+
+            & > * {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            &-text {
+                flex: 5;
+                @include flex(flex-end, center);
+
+                p {
+                    color: $textColor;
+                    font-size: 18px;
+                    font-weight: bolder;
+                    letter-spacing: 2px;
+                }
+            }
+
+            &-btn {
+                flex: 6;
+                @include flex(center, center);
+
+                button {
+                    width: 120px;
+                    height: 50px;
+                    outline: none;
+                    border: none;
+                    border-radius: 10px;
+                    background: linear-gradient(45deg, $backgroundColor1, $backgroundColor2);
+                    cursor: pointer;
+                    color: $textColor;
+                    font-size: 1.1rem;
+                    letter-spacing: 1px;
+                    font-weight: 600;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}
+
+.container {
+    width: 80%;
+    margin: 0 10%;
+    max-width: 1220px;
+    position: relative;
+    @include flex(center, center);
+}
+
+.poweredby {
+    position: fixed;
+    bottom: 2px;
+    right: 5px;
+    color: $textColor;
+    user-select: none;
+}
+
+.join {
+    width: 60%;
+    height: 60%;
+    min-width: 320px;
+    min-height: 400px;
+    @include flex(center, space-evenly, true);
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+    backdrop-filter: blur(1rem);
+    color: $textColor;
+    z-index: 1010;
+
+    & > * {
+        margin: 20px 0;
+        user-select: none;
+    }
+
+    form {
+        width: 80%;
+        @include flex(center, space-evenly, true);
+
+        & > *:not(:nth-child(1)):not(button) {
+            margin: 15px 0;
+        }
+
+        .input {
+            width: 60%;
+            min-width: 260px;
+            position: relative;
+
+            label {
+                position: absolute;
+                top: 30%;
+                left: 20px;
+                transition: all 0.3s ease-in-out;
+                font-size: 19px;
+            }
+
+            input {
+                width: 100%;
+                height: 100%;
+                border: none;
+                outline: none;
+                border-radius: 10px;
+                padding: 15px;
+                caret-color: $textColor;
+                font-size: 18px;
+                color: $textColor;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+
+                &:valid + label {
+                    top: -12px;
+                }
+
+                &:hover + label {
+                    top: -12px;
+                }
+            }
+
+            &.select {
+                .rooms {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px;
+                    transform: translate(-50%, -50%);
+                    cursor: pointer;
+
+                    svg {
+                        color: $textColor;
+
+                        font-size: 20px;
+                    }
+                }
+
+                .room-list {
+                    position: absolute;
+                    width: 100%;
+                    top: calc(100% + 10px);
+                    border-radius: 5px;
+                    max-height: 160px;
+                    overflow-y: auto;
+                    padding: 10px;
+                    backdrop-filter: blur(10px);
+                    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+                    @include flex(center, flex-start, true);
+
+                    &::-webkit-scrollbar {
+                        width: 3px;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background: darken($color: whitesmoke, $amount: 15);
+                        border-radius: 10px;
+                    }
+
+                    &-item {
+                        width: 100%;
+                        height: 30px;
+                        padding: 20px;
+                        color: $textColor;
+                        @include flex(center, center);
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin: 2px 0;
+                        font-size: 1.15rem;
+                        font-weight: bolder;
+                        letter-spacing: 1px;
+                        word-spacing: 2px;
+                        word-break: break-all;
+                        backdrop-filter: blur(10px);
+                        background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7));
+
+                        &:hover {
+                            transform: perspective(500px) translate3d(0, -2px, 10px);
+                        }
+                    }
+                }
+            }
+        }
+
+        button {
+            width: 180px;
+            height: 60px;
+            outline: none;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(120deg, $backgroundColor1, $backgroundColor2);
+            cursor: pointer;
+            color: $textColor;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 10px;
+
+            &:hover {
+                transform: perspective(500px) translate3d(0, 0, 5px);
+            }
+        }
+    }
+}
+
+section.chat {
+    width: 60%;
+    height: 70%;
+    min-width: 320px;
+    min-height: 500px;
+    @include flex(center, space-evenly, true);
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+    backdrop-filter: blur(1rem);
+    color: $textColor;
+    z-index: 1010;
+
+    .meta {
+        flex: 1;
+        width: 100%;
+        position: relative;
+
+        @include flex(flex-start, space-between);
+
+        & > *:not(:nth-child(2)):not(.show-user) {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        &--name {
+            letter-spacing: 2px;
+            word-spacing: 2px;
+        }
+
+        .show-user {
+            right: 50px;
+            width: 300px;
+            max-height: 200px;
+            position: absolute;
+            top: calc(100% - 22px);
+            @include flex(center, flex-start, true);
+            overflow-y: auto;
+            border-radius: 5px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.3));
+            backdrop-filter: blur(1rem);
+            padding: 20px;
+
+            &::-webkit-scrollbar {
+                width: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: darken($color: whitesmoke, $amount: 15);
+                border-radius: 10px;
+            }
+
+            h3 {
+                margin: 3px 0;
+            }
+
+            &--item {
+                width: 80%;
+                height: 40px;
+                margin: 4px 0;
+                padding: 10px;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+                @include flex(center, center, true);
+                border-radius: 5px;
+                font-size: 18px;
+            }
+        }
+    }
+
+    & > .chat {
+        flex: 8;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        @include flex(flex-start, center);
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: darken($color: whitesmoke, $amount: 15);
+            border-radius: 10px;
+        }
+
+        .messages {
+            width: 95%;
+            height: 100%;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            display: flex;
+            flex-direction: column;
+
+            .newcomer {
+                width: 100%;
+                height: 30px;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
+                @include flex(center, center);
+
+                p {
+                    word-break: break-all;
+                    font-size: 16px;
+                    letter-spacing: 1px;
+                    word-spacing: 2px;
+                }
+            }
+
+            .message {
+                min-width: 200px;
+                width: 40%;
+                background-color: aliceblue;
+                @include flex(flex-start, center, column);
+                margin: 8px 0;
+                padding: 15px;
+                border-radius: 10px;
+
+                &.own {
+                    align-self: flex-end;
+                    place-items: flex-start;
+                    background: $backgroundColor2;
+                    color: whitesmoke;
+                }
+
+                p {
+                    word-break: break-all;
+                    font-size: 16px;
+                    letter-spacing: 1px;
+                    word-spacing: 2px;
+                }
+            }
+        }
+    }
+
+    .send {
+        flex: 1;
+        width: 100%;
+        position: relative;
+
+        @include flex(center, center);
+
+        .input {
+            width: 80%;
+            min-width: 200px;
+            height: 60px;
+            position: relative;
+
+            input {
+                width: 100%;
+                min-width: 200px;
+                height: 60px;
+                border: none;
+                outline: none;
+                border-radius: 10px;
+                padding: 15px;
+                caret-color: $textColor;
+                font-size: 18px;
+                color: $textColor;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.5));
+            }
+
+            span {
+                position: absolute;
+                top: 50%;
+                right: 5px;
+                transform: translate(-50%, -50%);
+
+                cursor: pointer;
+
+                svg {
+                    font-size: 28px;
+                }
+            }
+
+            .picker {
+                position: absolute;
+                top: -100%;
+                right: 60px;
+            }
+        }
+
+        & > button {
+            width: 70px;
+            height: 50px;
+            outline: none;
+            border-radius: 10px;
+            border: none;
+            user-select: none;
+            cursor: pointer;
+            margin-left: 5px;
+
+            background-color: $backgroundColor2;
+
+            svg {
+                color: whitesmoke;
+                font-size: 22px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    section.chat {
+        .meta {
+            .show-user {
+                right: -10px;
+            }
+        }
+
+        .send {
+            .input {
+                .picker {
+                    right: -10px;
+                }
+            }
+        }
+    }
+}
